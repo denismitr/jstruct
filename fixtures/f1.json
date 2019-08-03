@@ -1,0 +1,17 @@
+{
+    "name": {
+        "first": "Denis",
+        "last": "Mitrofanov",
+        "phones": [
+            123,
+            980
+        ]
+    },
+    "age": 47,
+    "prof": "dev",
+    "pets": [
+        "cow",
+        "frog",
+        345
+    ]
+}

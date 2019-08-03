@@ -1,0 +1,14 @@
+{
+    "user": {
+        "name": "Ivan",
+        "surname": "Ivanov",
+        "address": {
+            "street": "1st street",
+            "house": 34,
+            "country": {
+                "name": "Australia",
+                "timezone": "Australia/Melbourne"
+            }
+        }
+    }
+}

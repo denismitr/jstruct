@@ -1,0 +1,13 @@
+{
+    "users": [
+        {
+            "name": "Pavel",
+            "surname": "Rogov"
+        },
+        {
+            "name": "Dmitry",
+            "surname": "Usov"
+        }
+    ],
+    "students": []
+}
