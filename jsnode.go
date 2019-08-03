@@ -3,6 +3,9 @@ package jstruct
 import (
 	"fmt"
 	"sort"
+	"strconv"
+
+	"hash/crc32"
 )
 
 const (
@@ -21,6 +24,27 @@ type jsNode struct {
 	typ      int
 	name     string
 	val      interface{}
+}
+
+func (n *jsNode) uniqueName() string {
+	if n.name != "" {
+		return n.name
+	}
+
+	return "object" + n.hash()
+}
+
+func (n *jsNode) hash() string {
+	hs := fmt.Sprintf("%v:%d", n.val, n.typ)
+
+	for i := range n.children {
+		hs += fmt.Sprintf("%s:%d", n.children[i].name, n.children[i].typ)
+	}
+
+	crc32q := crc32.MakeTable(0xD5828281)
+	checksum := crc32.Checksum([]byte(hs), crc32q)
+
+	return strconv.Itoa(int(checksum))
 }
 
 func (n *jsNode) addChild(c *jsNode) *jsNode {
@@ -57,16 +81,12 @@ func reprPrimitive(n *jsNode) string {
 	case map[string]interface{}:
 		return "map[string]interface{}"
 	default:
-		return fmt.Sprintf("%#v %s", n.val, n.name)
+		return fmt.Sprintf("%#v - %s", n.val, n.name)
 	}
 }
 
 func reprObject(n *jsNode) string {
-	if n.name == "" {
-		n.name = "object"
-	}
-
-	expr := fmt.Sprintf("\ntype %s struct {\n", n.name)
+	expr := fmt.Sprintf("\ntype %s struct {\n", n.uniqueName())
 
 	var keys []string
 	for _, c := range n.children {
