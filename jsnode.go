@@ -145,7 +145,7 @@ func typeAsString(n *jsNode) string {
 	case Array:
 		return reprArray(n)
 	case Object, RootObject:
-		return fmt.Sprintf("%s", n.name)
+		return fmt.Sprintf("%s", n.uniqueName())
 	default:
 		return "interface{}"
 	}
