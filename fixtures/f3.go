@@ -1,22 +1,22 @@
 package fixtures
 
-type country struct {
-	name     string
-	timezone string
-}
-
-type address struct {
-	street  string
-	house   float64
-	country country
+type f3 struct {
+	user user
 }
 
 type user struct {
+	address address
 	name    string
 	surname string
-	address address
 }
 
-type f3 struct {
-	user user
+type address struct {
+	country country
+	house   float64
+	street  string
+}
+
+type country struct {
+	name     string
+	timezone string
 }

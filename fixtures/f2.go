@@ -1,5 +1,11 @@
 package fixtures
 
 type f2 struct {
-	users []map[string]interface{}
+	students []interface{}
+	users    []object2830849126
+}
+
+type object2830849126 struct {
+	name    string
+	surname string
 }

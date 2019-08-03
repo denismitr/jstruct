@@ -9,10 +9,8 @@ import (
 )
 
 const (
-	// RootObject root
-	RootObject = iota
 	// Object type
-	Object
+	Object = iota
 	// Array type
 	Array
 	// Primitive type
@@ -35,7 +33,7 @@ func (n *jsNode) uniqueName() string {
 }
 
 func (n *jsNode) hash() string {
-	hs := fmt.Sprintf("%v:%d", n.val, n.typ)
+	hs := fmt.Sprintf("%T:%d", n.val, n.typ)
 
 	for i := range n.children {
 		hs += fmt.Sprintf("%s:%d", n.children[i].name, n.children[i].typ)
@@ -59,7 +57,7 @@ func (n *jsNode) isEmpty() bool {
 
 func (n *jsNode) repr() string {
 	switch n.typ {
-	case Object, RootObject:
+	case Object:
 		return reprObject(n)
 	case Array:
 		return reprArray(n)
@@ -144,7 +142,7 @@ func typeAsString(n *jsNode) string {
 		return reprPrimitive(n)
 	case Array:
 		return reprArray(n)
-	case Object, RootObject:
+	case Object:
 		return fmt.Sprintf("%s", n.uniqueName())
 	default:
 		return "interface{}"
