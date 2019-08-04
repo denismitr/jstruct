@@ -33,14 +33,14 @@ func (n *jsNode) uniqueName() string {
 }
 
 func (n *jsNode) hash() string {
-	hs := fmt.Sprintf("%T:%d", n.val, n.typ)
+	hash := fmt.Sprintf("%T:%d", n.val, n.typ)
 
 	for i := range n.children {
-		hs += fmt.Sprintf("%s:%d", n.children[i].name, n.children[i].typ)
+		hash += n.children[i].hash()
 	}
 
 	crc32q := crc32.MakeTable(0xD5828281)
-	checksum := crc32.Checksum([]byte(hs), crc32q)
+	checksum := crc32.Checksum([]byte(hash), crc32q)
 
 	return strconv.Itoa(int(checksum))
 }
@@ -79,7 +79,7 @@ func reprPrimitive(n *jsNode) string {
 	case map[string]interface{}:
 		return "map[string]interface{}"
 	default:
-		return fmt.Sprintf("%#v - %s", n.val, n.name)
+		return "interface{}"
 	}
 }
 
@@ -124,16 +124,6 @@ func reprArray(n *jsNode) string {
 	}
 
 	return fmt.Sprintf("[]%s", typ)
-}
-
-func reprMap(n *jsNode) string {
-	var repr string
-
-	for _, c := range n.children {
-		repr += fmt.Sprintf("%s", typeAsString(c))
-	}
-
-	return repr
 }
 
 func typeAsString(n *jsNode) string {

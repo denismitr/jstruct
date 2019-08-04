@@ -1,0 +1,18 @@
+{
+    "guest": {
+        "name": "Ivan",
+        "surname": "Ivanov",
+        "addresses": [{
+            "street": "1st street",
+            "house": 34,
+            "state": {
+                "name": "Australia",
+                "timezone": "Australia/Melbourne"
+            }
+        }]
+    },
+    "admin": {
+        "roles": ["ROLE_ADMIN", "ROLE_STAFF"],
+        "expiresAt": 12345678901
+    }
+}

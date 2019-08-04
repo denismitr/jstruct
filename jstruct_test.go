@@ -16,6 +16,7 @@ func TestParseJSONString(t *testing.T) {
 		{"f1"},
 		{"f2"},
 		{"f3"},
+		{"f4"},
 	}
 
 	for _, tc := range tcs {

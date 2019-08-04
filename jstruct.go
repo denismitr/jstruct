@@ -16,7 +16,9 @@ func iterate(st *stack, root *jsNode, data interface{}) *jsNode {
 		root.typ = Array
 
 		for i := 0; i < v.Len(); i++ {
-			n := &jsNode{}
+			n := &jsNode{
+				val: v.Index(i).Interface(),
+			}
 			root.addChild(iterate(st, n, v.Index(i).Interface()))
 		}
 
@@ -61,7 +63,7 @@ func createMainStruct(packageName, structName string, st *stack, root *jsNode) s
 	return pDef + "\n"
 }
 
-// ReadFromFile extracts json file content to string
+// ReadFromFile extracts json file content as string
 func ReadFromFile(filename string) (string, error) {
 	file, err := os.Open(filename)
 	if err != nil {
@@ -78,7 +80,7 @@ func ReadFromFile(filename string) (string, error) {
 	return string(b), nil
 }
 
-// WriteToFile writed output to GO file
+// WriteToFile write parsed output to a GO file
 func WriteToFile(filename, content string) error {
 	d := []byte(content)
 	err := ioutil.WriteFile(filename, d, 0644)
@@ -93,16 +95,16 @@ func WriteToFile(filename, content string) error {
 func Parse(packageName, rootName, jsn string) string {
 	m := gjson.Parse(jsn).Value()
 
-	var st stack
+	s := new(stack)
 
 	root := &jsNode{
 		name:     rootName,
 		children: make([]*jsNode, 0),
 	}
 
-	iterate(&st, root, m)
+	iterate(s, root, m)
 
-	return createMainStruct(packageName, rootName, &st, root)
+	return createMainStruct(packageName, rootName, s, root)
 }
 
 // Convert json file to go struct definition

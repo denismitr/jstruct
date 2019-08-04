@@ -2,10 +2,10 @@ package fixtures
 
 type f2 struct {
 	students []interface{}
-	users    []object2830849126
+	users    []object1278993467
 }
 
-type object2830849126 struct {
+type object1278993467 struct {
 	name    string
 	surname string
 }
